@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リアクショントレーニング</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- ヘッダー -->
+        <header id="app-header">
+            <h1>⚡ リアクショントレーニング</h1>
+            <p class="header-description">反応速度を鍛えよう！8つのモードで楽しくトレーニング</p>
+            
+            <!-- クラス情報入力エリア -->
+            <div class="class-info-input">
+                <div class="input-group">
+                    <label for="grade-input">学年:</label>
+                    <select id="grade-input" class="info-input">
+                        <option value="">選択してください</option>
+                        <option value="4">4年生</option>
+                        <option value="5">5年生</option>
+                        <option value="6">6年生</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="class-input">クラス:</label>
+                    <select id="class-input" class="info-input">
+                        <option value="">選択してください</option>
+                        <option value="1">1組</option>
+                        <option value="2">2組</option>
+                        <option value="3">3組</option>
+                        <option value="4">4組</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="student-number-input">出席番号:</label>
+                    <input type="number" id="student-number-input" class="info-input" min="1" max="50" placeholder="番号">
+                </div>
+            </div>
+
+            <!-- ヘッダーボタン -->
+            <div class="header-buttons">
+                <button id="help-button" class="header-button">❓ 使い方</button>
+                <button id="ranking-button" class="header-button">🏆 ランキング</button>
+            </div>
+        </header>
+
+        <!-- メインコンテンツエリア -->
+        <main id="main-content">
+            <!-- モード選択画面 -->
+            <section id="mode-selection" class="screen">
+                <h2>モードを選んでね</h2>
+                <p class="screen-subtitle">好きなトレーニングを選ぼう！</p>
+                <div id="mode-cards" class="mode-grid"></div>
+            </section>
+
+            <!-- レベル選択画面 -->
+            <section id="level-selection" class="screen hidden">
+                <button class="back-button" id="back-to-modes">← もどる</button>
+                <h2 id="selected-mode-title">モード名</h2>
+                <p id="selected-mode-description" class="mode-description"></p>
+                <p class="level-instruction">レベルを選んでね（かんたん←→むずかしい）</p>
+                <div class="level-grid" id="level-buttons"></div>
+            </section>
+
+            <!-- トレーニング画面 -->
+            <section id="training-screen" class="screen hidden">
+                <button class="back-button" id="back-to-levels">← もどる</button>
+                <h2 id="training-mode-title">トレーニング中...</h2>
+                <p id="training-level-info">レベル: -</p>
+                
+                <!-- 準備フェーズ -->
+                <div id="preparation-phase" class="training-phase">
+                    <div class="instruction-card">
+                        <h3>📋 やり方</h3>
+                        <p id="instruction-text" class="instruction-main"></p>
+                        <p id="quick-tip" class="quick-tip"></p>
+                        <button class="start-button" id="start-training-button">スタート！</button>
+                    </div>
+                </div>
+
+                <!-- トレーニングフェーズ -->
+                <div id="training-phase" class="training-phase hidden">
+                    <div class="progress-info">
+                        <span id="trial-counter">1/10</span>
+                    </div>
+                    <div id="training-area" class="training-area"></div>
+                </div>
+            </section>
+
+            <!-- 結果表示画面 -->
+            <section id="result-screen" class="screen hidden">
+                <h2>🎉 けっか発表</h2>
+                <div class="result-summary">
+                    <p id="result-mode-level"></p>
+                    <p id="result-student-info" class="student-info-display"></p>
+                </div>
+                
+                <!-- 保存状態メッセージ -->
+                <div id="save-status-message" class="save-status hidden"></div>
+                
+                <div class="result-card">
+                    <div class="result-item">
+                        <span class="result-label">スコア</span>
+                        <span class="result-value" id="result-score">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">平均反応時間</span>
+                        <span class="result-value" id="result-time">0.000s</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">正答数</span>
+                        <span class="result-value" id="result-correct">0/0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">正答率</span>
+                        <span class="result-value" id="result-accuracy">0%</span>
+                    </div>
+                </div>
+                <div class="result-actions">
+                    <button class="action-button" id="retry-button">もう一度やる</button>
+                    <button class="action-button" id="show-ranking-button">🏆 ランキングを見る</button>
+                    <button class="action-button secondary" id="back-to-mode-from-result">モード選択へ</button>
+                </div>
+            </section>
+
+            <!-- ランキング画面 -->
+            <section id="ranking-screen" class="screen hidden">
+                <button class="back-button" id="back-from-ranking">← もどる</button>
+                <h2>🏆 ランキング</h2>
+                
+                <!-- モード・レベル選択 -->
+                <div class="ranking-filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="ranking-mode-select">モード:</label>
+                            <select id="ranking-mode-select" class="ranking-select"></select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="ranking-level-select">レベル:</label>
+                            <select id="ranking-level-select" class="ranking-select">
+                                <option value="1">Lv.1</option>
+                                <option value="2">Lv.2</option>
+                                <option value="3">Lv.3</option>
+                                <option value="4">Lv.4</option>
+                                <option value="5">Lv.5</option>
+                                <option value="6">Lv.6</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- 範囲フィルタ -->
+                    <div class="scope-filters">
+                        <button class="scope-button active" data-scope="all">全体</button>
+                        <button class="scope-button" data-scope="grade">同じ学年</button>
+                        <button class="scope-button" data-scope="class">同じクラス</button>
+                    </div>
+                    
+                    <button id="load-ranking-button" class="action-button">表示する</button>
+                </div>
+
+                <!-- ランキングテーブル -->
+                <div id="ranking-container">
+                    <div id="ranking-loading" class="ranking-message hidden">
+                        <p>読み込み中...</p>
+                    </div>
+                    <div id="ranking-empty" class="ranking-message hidden">
+                        <p>まだスコアがないよ</p>
+                    </div>
+                    <div id="ranking-error" class="ranking-message hidden">
+                        <p>ランキングが読み込めませんでした</p>
+                    </div>
+                    <table id="ranking-table" class="ranking-table hidden">
+                        <thead>
+                            <tr>
+                                <th>順位</th>
+                                <th>学年・クラス</th>
+                                <th>出席番号</th>
+                                <th>スコア</th>
+                                <th>反応時間</th>
+                                <th>正答率</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ranking-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 使い方画面 -->
+            <section id="help-screen" class="screen hidden">
+                <button class="back-button" id="back-from-help">← もどる</button>
+                <h2>❓ 使い方ガイド</h2>
+                
+                <div class="help-content">
+                    <div class="help-section">
+                        <h3>🎯 このアプリについて</h3>
+                        <p>このアプリは、反応速度（はんのうそくど）を楽しくトレーニングするためのアプリです。画面に出てくる色や音、問題にできるだけ速く正確に反応しましょう！</p>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>📚 8つのモード</h3>
+                        <div class="mode-list">
+                            <div class="mode-help-item">
+                                <span class="mode-icon" style="background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);">⚡</span>
+                                <div>
+                                    <strong>単純反応モード</strong>
+                                    <p>光や音が来たら、すぐにタップ！シンプルな反応トレーニング</p>
+                                </div>
+                            </div>
+                            <div class="mode-help-item">
+                                <span class="mode-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">🎯</span>
+                                <div>
+                                    <strong>選択反応モード</strong>
+                                    <p>正しいものだけを選んでタップ！選ぶ力を鍛えよう</p>
+                                </div>
+                            </div>
+                            <div class="mode-help-item">
+                                <span class="mode-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">🎨</span>
+                                <div>
+                                    <strong>マルチモーダル反応モード</strong>
+                                    <p>色・音・形など、いろいろな刺激に反応しよう</p>
+                                </div>
+                            </div>
+                            <div class="mode-help-item">
+                                <span class="mode-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">🔢</span>
+                                <div>
+                                    <strong>算数リアクションモード</strong>
+                                    <p>計算問題を速く解こう！算数の力もアップ</p>
+                                </div>
+                            </div>
+                            <div class="mode-help-item">
+                                <span class="mode-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">📖</span>
+                                <div>
+                                    <strong>国語リアクションモード</strong>
+                                    <p>漢字や言葉の問題に反応！国語の力も鍛えられるよ</p>
+                                </div>
+                            </div>
+                            <div class="mode-help-item">
+                                <span class="mode-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">🧠</span>
+                                <div>
+                                    <strong>記憶リアクションモード</strong>
+                                    <p>覚えたことを思い出して反応！記憶力トレーニング</p>
+                                </div>
+                            </div>
+                            <div class="mode-help-item">
+                                <span class="mode-icon" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">🔄</span>
+                                <div>
+                                    <strong>空間認知リアクションモード</strong>
+                                    <p>図形や方向を判断！空間を見る力を鍛えよう</p>
+                                </div>
+                            </div>
+                            <div class="mode-help-item">
+                                <span class="mode-icon" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">👑</span>
+                                <div>
+                                    <strong>複合チャレンジモード</strong>
+                                    <p>すべての力を試す最強モード！挑戦してみよう</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>⏱️ 所要時間</h3>
+                        <p>1回のトレーニングは約<strong>1〜3分</strong>で終わります。10問の問題に挑戦します。</p>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>📊 スコアとランキング</h3>
+                        <ul class="help-list">
+                            <li><strong>スコア：</strong>反応時間が速いほど、正答率が高いほど高得点！</li>
+                            <li><strong>レベル：</strong>レベルが高いほどスコアも高くなります</li>
+                            <li><strong>ランキング：</strong>全体・同じ学年・同じクラスでランキングが見られます</li>
+                            <li><strong>自分の記録：</strong>黄色くハイライトされた行があなたの記録です</li>
+                        </ul>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>👨‍🏫 先生へ</h3>
+                        <p>児童には学年・クラス・出席番号を入力させてからトレーニングを開始させてください。ランキング機能でクラス内の競争意識を高めることができます。各モードは認知能力の異なる側面を鍛えるよう設計されています。</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- フッター -->
+        <footer id="app-footer">
+            <p>&copy; 2025 リアクショントレーニング</p>
+        </footer>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
