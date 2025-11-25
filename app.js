@@ -22,14 +22,14 @@ import {
 // ========================================
 // ⚠️ ここに自分のFirebase設定を入れてください
 // ========================================
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
+ const firebaseConfig = {
+    apiKey: "AIzaSyDus4ZzgdRPgxrXvGfzMD73rmnIKwcmR0M",
+    authDomain: "reaction-training-app-mutsuura.firebaseapp.com",
+    projectId: "reaction-training-app-mutsuura",
+    storageBucket: "reaction-training-app-mutsuura.firebasestorage.app",
+    messagingSenderId: "678715997346",
+    appId: "1:678715997346:web:169e2ad9021fa744cf6bfb"
+  };
 
 // Firebase初期化
 const app = initializeApp(firebaseConfig);
