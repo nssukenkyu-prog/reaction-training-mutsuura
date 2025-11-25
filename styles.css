@@ -1,0 +1,898 @@
+/* リセット & 基本設定 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'メイリオ', Meiryo, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ヘッダー */
+#app-header {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem 1rem 1.5rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+#app-header h1 {
+    font-size: 2.8rem;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+}
+
+.header-description {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+/* クラス情報入力 */
+.class-info-input {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 150px;
+}
+
+.input-group label {
+    font-size: 1rem;
+    color: #555;
+    font-weight: bold;
+}
+
+.info-input {
+    padding: 0.75rem;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    background: white;
+    transition: border-color 0.2s;
+}
+
+.info-input:focus {
+    outline: none;
+    border-color: #764ba2;
+}
+
+/* ヘッダーボタン */
+.header-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 0.9rem 1.8rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.header-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* メインコンテンツ */
+#main-content {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.screen {
+    background: white;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in;
+}
+
+.screen.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.screen h2 {
+    font-size: 2.5rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.screen-subtitle {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #888;
+    margin-bottom: 2rem;
+}
+
+/* モード選択画面 */
+.mode-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.mode-card {
+    color: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.mode-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+.mode-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.mode-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.mode-card p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+/* モード別カラー */
+.mode-card[data-mode="simple"] {
+    background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+}
+
+.mode-card[data-mode="choice"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.mode-card[data-mode="multimodal"] {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.mode-card[data-mode="math"] {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.mode-card[data-mode="japanese"] {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.mode-card[data-mode="memory"] {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.mode-card[data-mode="spatial"] {
+    background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+}
+
+.mode-card[data-mode="master"] {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+/* レベル選択画面 */
+.back-button {
+    background: #f0f0f0;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    transition: background 0.2s;
+    font-weight: bold;
+}
+
+.back-button:hover {
+    background: #e0e0e0;
+}
+
+#selected-mode-title {
+    color: #667eea;
+}
+
+.mode-description {
+    text-align: center;
+    color: #666;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.level-instruction {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+    margin-bottom: 2rem;
+}
+
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.level-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 2.5rem 1rem;
+    border-radius: 16px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.level-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* トレーニング画面 */
+#training-level-info {
+    text-align: center;
+    color: #666;
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+}
+
+.training-phase {
+    min-height: 450px;
+}
+
+.training-phase.hidden {
+    display: none;
+}
+
+.instruction-card {
+    background: #f9f9f9;
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.instruction-card h3 {
+    color: #667eea;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.instruction-main {
+    font-size: 1.4rem;
+    line-height: 2;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.quick-tip {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #FF6B6B;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #fff3cd;
+    border-radius: 8px;
+}
+
+.progress-info {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 1.5rem;
+}
+
+.training-area {
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9f9f9;
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.start-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 2rem 4rem;
+    border-radius: 50px;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.start-button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 28px rgba(102, 126, 234, 0.6);
+}
+
+.start-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* トレーニングエリア内の要素 */
+.reaction-target {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.reaction-target:active {
+    transform: scale(0.95);
+}
+
+.choice-container {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.choice-item {
+    width: 180px;
+    height: 180px;
+    border-radius: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    transition: transform 0.1s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.choice-item:active {
+    transform: scale(0.95);
+}
+
+.swipe-zone {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.question-display {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.memory-display {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* 結果画面 */
+.result-summary {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.result-summary p {
+    font-size: 1.4rem;
+    color: #666;
+}
+
+.student-info-display {
+    font-size: 1.2rem;
+    color: #888;
+    margin-top: 0.5rem;
+}
+
+.save-status {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.save-status.hidden {
+    display: none;
+}
+
+.save-status.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.save-status.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.result-card {
+    background: #f9f9f9;
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.8rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    font-size: 1.4rem;
+    color: #666;
+}
+
+.result-value {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.result-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.action-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.action-button.secondary {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.action-button.secondary:hover {
+    background: #e0e0e0;
+}
+
+/* ランキング画面 */
+.ranking-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.filter-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-size: 1.2rem;
+    color: #666;
+    font-weight: bold;
+}
+
+.ranking-select {
+    padding: 0.9rem 1.2rem;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    background: white;
+    cursor: pointer;
+    min-width: 220px;
+}
+
+.ranking-select:focus {
+    outline: none;
+    border-color: #764ba2;
+}
+
+.scope-filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.scope-button {
+    background: #f0f0f0;
+    color: #333;
+    border: 2px solid transparent;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.scope-button:hover {
+    background: #e0e0e0;
+}
+
+.scope-button.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+}
+
+.ranking-container {
+    margin-top: 2rem;
+}
+
+.ranking-message {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.5rem;
+    color: #666;
+}
+
+.ranking-message.hidden {
+    display: none;
+}
+
+.ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+}
+
+.ranking-table.hidden {
+    display: none;
+}
+
+.ranking-table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.ranking-table th {
+    padding: 1.2rem;
+    text-align: left;
+    font-size: 1.3rem;
+}
+
+.ranking-table td {
+    padding: 1.2rem;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 1.2rem;
+}
+
+.ranking-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.ranking-table tbody tr.highlight {
+    background: #fff3cd;
+    font-weight: bold;
+}
+
+.ranking-table tbody tr.highlight:hover {
+    background: #ffe69c;
+}
+
+.rank-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.rank-1 {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: white;
+}
+
+.rank-2 {
+    background: linear-gradient(135deg, #C0C0C0 0%, #A8A8A8 100%);
+    color: white;
+}
+
+.rank-3 {
+    background: linear-gradient(135deg, #CD7F32 0%, #B87333 100%);
+    color: white;
+}
+
+/* 使い方画面 */
+.help-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.help-section {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+}
+
+.help-section h3 {
+    font-size: 1.8rem;
+    color: #667eea;
+    margin-bottom: 1.5rem;
+}
+
+.help-section p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.mode-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.mode-help-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.mode-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mode-help-item strong {
+    font-size: 1.3rem;
+    color: #333;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.mode-help-item p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.help-list {
+    list-style: none;
+    padding: 0;
+}
+
+.help-list li {
+    font-size: 1.2rem;
+    line-height: 2;
+    color: #555;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.help-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+}
+
+/* フッター */
+#app-footer {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.5rem;
+    text-align: center;
+    color: #666;
+    font-size: 1rem;
+    margin-top: 2rem;
+}
+
+/* アニメーション */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.pulse {
+    animation: pulse 0.5s ease-in-out;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    #app-header h1 {
+        font-size: 2.2rem;
+    }
+
+    .class-info-input {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .input-group {
+        min-width: 100%;
+    }
+
+    .header-buttons {
+        flex-direction: column;
+    }
+
+    .header-button {
+        width: 100%;
+    }
+
+    .mode-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .level-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .result-actions {
+        flex-direction: column;
+    }
+
+    .action-button {
+        width: 100%;
+    }
+
+    .choice-container {
+        gap: 1rem;
+    }
+
+    .choice-item {
+        width: 140px;
+        height: 140px;
+        font-size: 1.8rem;
+    }
+
+    .filter-row {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .ranking-select {
+        width: 100%;
+    }
+
+    .ranking-table {
+        font-size: 1rem;
+    }
+
+    .ranking-table th,
+    .ranking-table td {
+        padding: 0.8rem 0.5rem;
+    }
+
+    .mode-help-item {
+        flex-direction: column;
+    }
+}
